@@ -40,20 +40,42 @@ class Core:
             elif i.startswith('"') and i.endswith('"'):
                 res.append([i, "data"])
             elif i.startswith('/') and i.endswith('/'):
-                res.append([i, "loopToken"])
+                res.append([i, "loop"])
             elif re.fullmatch(r'[-+]?\d+[.]\d+', i):
                 res.append([i, "data"])
 
         return res
 
-    def parseCMD(self, tokenize_array):
+    def parseCMD(self, token):
 
-        val = tokenize_array[self.x][0]
-        val = tokenize_array[self.x][1]
+        res = []
 
-        pass
+        val = token[self.x][0]
+        typ = token[self.x][1]
+
+
+        if typ in ("zero", "data", "type", "loop"):
+            return [val]
+        elif typ == "uno":
+            arg = self.parseCMD(token[self.x + 1])
+            return [val, arg]
+        elif typ == "duo":
+            arg = self.parseCMD(token[self.x + 1])
+            arg2 = self.parseCMD(token[self.x + 2])
+            return [val, arg, arg2]
+
+
+    def parser(self, tokenize_arr):
+        self.x = 0
+        res = []
+        while self.x < len(tokenize_arr):
+            res.append(self.parseCMD(tokenize_arr))
+
+        return res
+        
+            
 
 
 t = Core()
 
-print(t.lexer(input()))
+print(t.parser(t.lexer(input())))
