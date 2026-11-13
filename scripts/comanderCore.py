@@ -51,6 +51,8 @@ class Core:
         val = tokenize_array[self.x][0]
         val = tokenize_array[self.x][1]
 
+        pass
+
 
 t = Core()
 
