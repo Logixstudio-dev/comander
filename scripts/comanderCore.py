@@ -53,15 +53,16 @@ class Core:
         val = token[self.x][0]
         typ = token[self.x][1]
 
+        self.x += 1
 
         if typ in ("zero", "data", "type", "loop"):
             return [val]
         elif typ == "uno":
-            arg = self.parseCMD(token[self.x + 1])
+            arg = self.parseCMD(token[self.x])
             return [val, arg]
         elif typ == "duo":
-            arg = self.parseCMD(token[self.x + 1])
-            arg2 = self.parseCMD(token[self.x + 2])
+            arg = self.parseCMD(token[self.x])
+            arg2 = self.parseCMD(token[self.x])
             return [val, arg, arg2]
 
 
