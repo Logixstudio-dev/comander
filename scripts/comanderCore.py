@@ -81,9 +81,17 @@ class Core:
         name = CMD[0]
         typ = CMD[1]
 
-        
-        
+        if typ == 'data':
+            if name.isdigit():
+                return int(name)
+            if name == 'true':
+                return True
+            if name == 'false':
+                return False
+            if name == 'null':
+                return None
             
+  
 
 
 t = Core()
