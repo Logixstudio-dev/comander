@@ -41,13 +41,16 @@ class Core:
                 res.append([i, "data"])
             elif i.startswith('/') and i.endswith('/'):
                 res.append([i, "loop"])
-            elif re.fullmatch(r'[-+]?\d+[.]\d+', i):
+            elif re.fullmatch(r'[-+]?\d+[.]\d+', i) or re.fullmatch(r'[-+]?\d+', i):
                 res.append([i, "data"])
 
         return res
 
     def parseCMD(self, token):
 
+        if self.x >= len(token):
+            return None
+        
         res = []
 
         val = token[self.x][0]
@@ -56,14 +59,14 @@ class Core:
         self.x += 1
 
         if typ in ("zero", "data", "type", "loop"):
-            return [val]
+            return [val, typ]
         elif typ == "uno":
-            arg = self.parseCMD(token[self.x])
-            return [val, arg]
+            arg = self.parseCMD(token)
+            return [val, typ, arg]
         elif typ == "duo":
-            arg = self.parseCMD(token[self.x])
-            arg2 = self.parseCMD(token[self.x])
-            return [val, arg, arg2]
+            arg = self.parseCMD(token)
+            arg2 = self.parseCMD(token)
+            return [val, typ, arg, arg2]
 
 
     def parser(self, tokenize_arr):
@@ -73,6 +76,12 @@ class Core:
             res.append(self.parseCMD(tokenize_arr))
 
         return res
+
+    def runCMD(self, CMD):
+        name = CMD[0]
+        typ = CMD[1]
+
+        
         
             
 
