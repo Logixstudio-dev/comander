@@ -80,6 +80,7 @@ class Core:
 
         name = CMD[0]
         typ = CMD[1]
+        
         if len(CMD) < 3:
 
             if re.fullmatch(r'[-+]?\d+[.]\d+', name):
