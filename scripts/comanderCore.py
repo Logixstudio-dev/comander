@@ -27,6 +27,7 @@ class Core:
     def __init__(self):
         self.stesh = []
         self.x = 0
+        self.y = 0
 
     def lexer(self, code):
 
@@ -41,8 +42,10 @@ class Core:
                 res.append([i, "data"])
             elif i.startswith('/') and i.endswith('/'):
                 res.append([i, "loop"])
-            elif re.fullmatch(r'[-+]?\d+[.]\d+', i):
+            elif re.fullmatch(r'[-+]?\d+[.]\d+', i) or re.fullmatch(r'[-+]?\d+', i):
                 res.append([i, "data"])
+            else:
+                print("ожидался токен или данные в позиции:" + str(i))
 
         return res
 
@@ -72,6 +75,30 @@ class Core:
             res.append(self.parseCMD(tokenize_arr))
 
         return res
+
+    def runCMD(self, CMD):
+
+        name = CMD[0]
+        typ = CMD[1]
+
+        if re.fullmatch(r'[-+]?\d+[.]\d+', name):
+            return float(name)
+        elif re.fullmatch(r'[-+]?\d+', name):
+            return int(name)
+        elif name == "true":
+            return True
+        elif name == "false":
+            return False
+        elif name == "null":
+            return None
+        elif name in ("<int>", "<str>", "<log>"):
+            return name
+        
+        
+        
+        
+
+
         
             
 
