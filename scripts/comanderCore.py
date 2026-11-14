@@ -80,20 +80,22 @@ class Core:
 
         name = CMD[0]
         typ = CMD[1]
+        if len(CMD) < 3:
 
-        if re.fullmatch(r'[-+]?\d+[.]\d+', name):
-            return float(name)
-        elif re.fullmatch(r'[-+]?\d+', name):
-            return int(name)
-        elif name == "true":
-            return True
-        elif name == "false":
-            return False
-        elif name == "null":
-            return None
-        elif name in ("<int>", "<str>", "<log>"):
-            return name
-        
+            if re.fullmatch(r'[-+]?\d+[.]\d+', name):
+                return float(name)
+            elif re.fullmatch(r'[-+]?\d+', name):
+                return int(name)
+            elif name == "true":
+                return True
+            elif name == "false":
+                return False
+            elif name == "null":
+                return None
+            elif name in ("<int>", "<str>", "<log>"):
+                return name
+            else:
+                return str(name)
         
         
         
