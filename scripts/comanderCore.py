@@ -79,8 +79,9 @@ class Core:
     def runCMD(self, CMD):
 
         name = CMD[0]
-        typ = CMD[1]
-        
+
+        self.y += 1
+
         if len(CMD) < 3:
 
             if re.fullmatch(r'[-+]?\d+[.]\d+', name):
@@ -97,6 +98,13 @@ class Core:
                 return name
             else:
                 return str(name)
+        else:
+            if name == "in":
+                return input()
+            elif name == "out":
+                return self.runCMD(CMD)
+            
+
         
         
         
