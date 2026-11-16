@@ -102,7 +102,7 @@ class Core:
             elif name in ("<int>", "<str>", "<log>"):
                 return name
             elif name.startswith('/') and name.endswith('/'):
-                self.loopTokens[name] = self.y
+                return name
             else:
                 return str(name)
         else:
@@ -154,8 +154,8 @@ class Core:
         self.loopTokens = {}
 
         for i in range(len(c)):
-            if len(c[i]) == 1 and с[i].startswith('/') and c[i].endswith('/'):
-                self.loopTokens[c[i]] = i
+            if len(c[i]) == 1 and c[i][0].startswith('/') and c[i][0].endswith('/'):
+                self.loopTokens[c[i][0]] = i
         
         while self.y < len(c):
             self.runCMD(c[self.y])
