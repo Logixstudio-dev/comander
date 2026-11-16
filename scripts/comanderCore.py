@@ -24,12 +24,16 @@ tokens  = {
 
 class Core:
 
+    #init parametres
+    
     def __init__(self):
         self.stesh = []
         self.x = 0
         self.y = 0
         self.loopTokens = {}
 
+    #lexer for text to tokenize array
+    
     def lexer(self, code):
 
         res = []
@@ -49,6 +53,8 @@ class Core:
                 print("ожидался токен или данные в позиции:" + str(i))
 
         return res
+
+    #recursive parsing of a tokenized list
 
     def parseCMD(self, token):
 
@@ -78,6 +84,8 @@ class Core:
             if self.x >= len(tokenize_arr):
                 break
         return res
+
+    #running parsed list
 
     def runCMD(self, CMD):
 
