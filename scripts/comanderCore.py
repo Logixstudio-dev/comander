@@ -28,6 +28,7 @@ class Core:
         self.stesh = []
         self.x = 0
         self.y = 0
+        self.loopTokens = {}
 
     def lexer(self, code):
 
@@ -56,15 +57,16 @@ class Core:
         val = token[self.x][0]
         typ = token[self.x][1]
 
+        self.x += 1
 
         if typ in ("zero", "data", "type", "loop"):
             return [val]
         elif typ == "uno":
-            arg = self.parseCMD(token[self.x + 1])
+            arg = self.parseCMD(token)
             return [val, arg]
         elif typ == "duo":
-            arg = self.parseCMD(token[self.x + 1])
-            arg2 = self.parseCMD(token[self.x + 2])
+            arg = self.parseCMD(token)
+            arg2 = self.parseCMD(token)
             return [val, arg, arg2]
 
 
@@ -73,16 +75,19 @@ class Core:
         res = []
         while self.x < len(tokenize_arr):
             res.append(self.parseCMD(tokenize_arr))
-
+            if self.x >= len(tokenize_arr):
+                break
         return res
 
     def runCMD(self, CMD):
 
         name = CMD[0]
 
-        self.y += 1
 
-        if len(CMD) < 3:
+        if len(CMD) == 1:
+
+            if name == "in":
+                return input()
 
             if re.fullmatch(r'[-+]?\d+[.]\d+', name):
                 return float(name)
@@ -96,24 +101,69 @@ class Core:
                 return None
             elif name in ("<int>", "<str>", "<log>"):
                 return name
+            elif name.startswith('/') and name.endswith('/'):
+                self.loopTokens[name] = self.y
             else:
                 return str(name)
         else:
-            if name == "in":
-                return input()
-            elif name == "out":
-                return self.runCMD(CMD)
-            
+            if name == "out":
+                 arg = self.runCMD(CMD[1])
+                 print(arg)
+            elif name == "set":
+                arg = self.runCMD(CMD[1])
+                self.stesh.append(arg)
+            elif name == "get":
+                arg = self.runCMD(CMD[1])
+                return self.stesh[arg]
+            elif name == "delete":
+                arg = self.runCMD(CMD[1])
+                self.stesh.pop(arg)
+            elif name == "add":
+                arg = self.runCMD(CMD[1])
+                self.stesh[len(self.stesh) - 1] += arg
+            elif name == "sub":
+                arg = self.runCMD(CMD[1])
+                self.stesh[len(self.stesh) - 1] -= arg
+            elif name == "mul":
+                arg = self.runCMD(CMD[1])
+                self.stesh[len(self.stesh) - 1] *= arg
+            elif name == "div":
+                arg = self.runCMD(CMD[1])
+                self.stesh[len(self.stesh) - 1] /= arg
+            elif name == "jump":
+                arg = self.runCMD(CMD[1])
+                self.y = self.loopTokens.get(arg)
+            elif name == "if":
+                arg = self.runCMD(CMD[1])
+                arg2 = self.runCMD(CMD[2])
+                if self.stesh[len(self.stesh) - 1] == arg:
+                    self.y = self.loopTokens.get(arg2)
+            elif name == "convert":
+                arg = self.runCMD(CMD[1])
+                arg2 = self.runCMD(CMD[2])
+                if arg2 == "<int>":
+                    self.stesh[arg] = int(self.stesh[arg])
+                elif arg2 == "<str>":
+                    self.stesh[arg] = str(self.stesh[arg])
+                elif arg2 == "<str>":
+                    self.stesh[arg] = bool(self.stesh[arg])
 
-        
-        
-        
+    def run(self, code):
+        c = self.parser(self.lexer(code))
+        self.y = 0
+        self.loopTokens = {}
 
-
+        for i in range(len(c)):
+            if len(c[i]) == 1 and с[i].startswith('/') and c[i].endswith('/'):
+                self.loopTokens[c[i]] = i
         
-            
+        while self.y < len(c):
+            self.runCMD(c[self.y])
+            self.y += 1
+            if self.y >= len(c):
+                break
 
 
 t = Core()
 
-print(t.parser(t.lexer(input())))
+t.run(input())
