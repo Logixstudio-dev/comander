@@ -1,0 +1,6 @@
+set in
+set in
+convert 0 <int>
+convert 1 <int>
+add get 0
+out get 1

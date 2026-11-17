@@ -173,3 +173,12 @@ class Core:
                 break
 
         return 0
+
+    def startCodefromFile(self, FilePath):
+        with open(FilePath, 'r') as file:
+            self.run(file.read())
+
+
+t = Core()
+
+t.startCodefromFile("D:/comander/scripts/testing_programms/adding_two_numbers.cn")
