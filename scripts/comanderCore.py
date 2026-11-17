@@ -51,6 +51,7 @@ class Core:
                 res.append([i, "data"])
             else:
                 print("ожидался токен или данные в позиции:" + str(i))
+                return 1
 
         return res
 
@@ -128,23 +129,23 @@ class Core:
                 self.stesh.pop(arg)
             elif name == "add":
                 arg = self.runCMD(CMD[1])
-                self.stesh[len(self.stesh) - 1] += arg
+                self.stesh[-1] += arg
             elif name == "sub":
                 arg = self.runCMD(CMD[1])
-                self.stesh[len(self.stesh) - 1] -= arg
+                self.stesh[-1] -= arg
             elif name == "mul":
                 arg = self.runCMD(CMD[1])
-                self.stesh[len(self.stesh) - 1] *= arg
+                self.stesh[-1] *= arg
             elif name == "div":
                 arg = self.runCMD(CMD[1])
-                self.stesh[len(self.stesh) - 1] /= arg
+                self.stesh[-1] /= arg
             elif name == "jump":
                 arg = self.runCMD(CMD[1])
                 self.y = self.loopTokens.get(arg)
             elif name == "if":
                 arg = self.runCMD(CMD[1])
                 arg2 = self.runCMD(CMD[2])
-                if self.stesh[len(self.stesh) - 1] == arg:
+                if self.stesh[len(self.stesh) - 1] != arg:
                     self.y = self.loopTokens.get(arg2)
             elif name == "convert":
                 arg = self.runCMD(CMD[1])
@@ -153,7 +154,7 @@ class Core:
                     self.stesh[arg] = int(self.stesh[arg])
                 elif arg2 == "<str>":
                     self.stesh[arg] = str(self.stesh[arg])
-                elif arg2 == "<str>":
+                elif arg2 == "<log>":
                     self.stesh[arg] = bool(self.stesh[arg])
 
     def run(self, code):
@@ -171,7 +172,13 @@ class Core:
             if self.y >= len(c):
                 break
 
+        return 0
+
+    def startCodefromFile(self, FilePath):
+        with open(FilePath, 'r') as file:
+            self.run(file.read())
+
 
 t = Core()
 
-t.run(input())
+t.startCodefromFile("D:/comander/scripts/testing_programms/adding_two_numbers.cn")
