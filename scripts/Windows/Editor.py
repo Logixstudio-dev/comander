@@ -1,9 +1,18 @@
-import tkinter as tk
-from tkinter import ttk
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.uix.boxlayout import BoxLayout
 
 
 
-root =tk.Tk()
-root.geometry("1000x600+150+150")
-root.title("ComanderIDE Editor")
-root.mainloop()
+class Editor(BoxLayout):
+    pass
+
+class EditorApp(App):
+
+    def build(self):
+        return Editor()
+
+
+if __name__ == "__main__":
+    app = EditorApp()
+    app.run()
