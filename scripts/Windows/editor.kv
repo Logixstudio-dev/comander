@@ -1,6 +1,62 @@
 <Editor>:
-    Label:
-        text: 'Привет'
 
-    Label:
-        text: 'Мир'
+    padding: 20
+    spacing: 5
+    orientation: 'horizontal'
+    
+    BoxLayout:
+
+        orientation: 'vertical'
+
+        BoxLayout:
+
+            orientation: 'horizontal'
+
+            size_hint: 0.2, 0.2
+
+            Button:
+
+                Image:
+                    source: '../assets/images/play.png'
+
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+                    size: 32, 32
+
+            Button:
+                    
+                Image:
+                    source: '../assets/images/save.png'
+
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+                    size: 32, 32
+            
+            Button:
+                    
+                Image:
+                    source: '../assets/images/open.png'
+
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+                    size: 32, 32
+
+
+        TextInput:
+
+            multiline: True
+
+        TextInput:
+            
+            background_color: 0, 0, 0, 1
+
+            foreground_color: 1, 1, 1, 1
+
+            multiline: False
+
+
+        
+
