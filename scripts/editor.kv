@@ -16,8 +16,12 @@
 
             Button:
 
+                on_press: root.start_stop()
+
+
                 Image:
-                    source: '../assets/images/play.png'
+
+                    source: 'assets/images/play.png'
 
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
@@ -25,9 +29,11 @@
                     size: 32, 32
 
             Button:
+
+                on_press: root.save_file()
                     
                 Image:
-                    source: '../assets/images/save.png'
+                    source: 'assets/images/save.png'
 
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
@@ -35,9 +41,11 @@
                     size: 32, 32
             
             Button:
+
+                on_press: root.open_file()
                     
                 Image:
-                    source: '../assets/images/open.png'
+                    source: 'assets/images/open.png'
 
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
@@ -47,15 +55,19 @@
 
         TextInput:
 
+            id: code_input
+
             multiline: True
 
         TextInput:
+
+            id: console
             
             background_color: 0, 0, 0, 1
 
             foreground_color: 1, 1, 1, 1
 
-            multiline: False
+            multiline: True
 
 
         
