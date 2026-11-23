@@ -15,11 +15,13 @@ class Editor(BoxLayout):
         code = self.ids.code_input.text.strip()
         return code
 
-    def open_file():
-        pass
-
-    def save_file():
-        pass
+    def open_file(self):
+        with open(fd.askopenfilename(), 'r') as file:
+            self.ids.code_input.text = file.read()
+    
+    def save_file(self):
+        with open(fd.asksaveasfilename(defaultextension=".cn"), 'w') as file:
+            file.write(self.ids.code_input.text)
 
 class EditorApp(App):
 
